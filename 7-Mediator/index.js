@@ -1,30 +1,68 @@
-function Member(name) {
-    this.name = name;
-    this.chatRoom = null;
-}
+// MEDIATOR PATTERN WORKS IN A WAY THAT IT WORKS IN MIDDLE FOR A TASK TO BE PERFORMED.
 
-Member.prototype = {
-    send: function (message, toMember) {
+// ----------------------------
+// CONSTRUCTOR WAY
+// ----------------------------
+
+// function Member(name) {
+//     this.name = name;
+//     this.chatRoom = null;
+// }
+
+// Member.prototype = {
+//     send: function (message, toMember) {
+//         this.chatRoom.send(message, this, toMember); // CALLING SEND FUNCTION OF THE CHATROOM
+//     },
+//     recieve: function (message, fromMember) {
+//         console.log(`${fromMember.name} to ${this.name}: ${message}`); // CALLING THIS FUNCTION FROM THE CHATROOM
+//     },
+// };
+
+// function ChatRoom() {
+//     this.members = {};
+// }
+
+// ChatRoom.prototype = {
+//     addMember: function (member) {
+//         this.members[member.name] = member;
+//         member.chatRoom = this;
+//     },
+//     send: function (message, fromMember, toMember) {
+//         toMember.recieve(message, fromMember);
+//     },
+// };
+
+// ----------------------------
+// CLASS WAY
+// ----------------------------
+class Member {
+    constructor(name) {
+        this.name = name;
+        this.chatRoom = null;
+    }
+
+    send(message, toMember) {
         this.chatRoom.send(message, this, toMember); // CALLING SEND FUNCTION OF THE CHATROOM
-    },
-    recieve: function (message, fromMember) {
-        console.log(`${fromMember.name} to ${this.name}: ${message}`); // CALLING THIS FUNCTION FROM THE CHATROOM
-    },
-};
+    }
 
-function ChatRoom() {
-    this.members = {};
+    recieve(message, fromMember) {
+        console.log(`${fromMember.name} to ${this.name}: ${message}`); // CALLING THIS FUNCTION FROM THE CHATROOM
+    }
 }
 
-ChatRoom.prototype = {
-    addMember: function (member) {
+class ChatRoom {
+    constructor() {
+        this.members = {};
+    }
+
+    addMember(member) {
         this.members[member.name] = member;
         member.chatRoom = this;
-    },
-    send: function (message, fromMember, toMember) {
+    }
+    send(message, fromMember, toMember) {
         toMember.recieve(message, fromMember);
-    },
-};
+    }
+}
 
 // -------------------
 // CREATE MEMBERS
